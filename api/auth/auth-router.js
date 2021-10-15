@@ -2,6 +2,8 @@ const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const buildToken = require("./token-builder");
 
+const { checkUsernameFree } = require("../middleware/auth-middleware");
+
 const Users = require("../users/users-model");
 
 router.get("/users", (req, res, next) => {
@@ -12,7 +14,7 @@ router.get("/users", (req, res, next) => {
     .catch(next);
 });
 
-router.post("/register", (req, res, next) => {
+router.post("/register", checkUsernameFree, (req, res, next) => {
   let user = req.body;
 
   const rounds = process.env.BCRYPT_ROUNDS || 8;
@@ -20,11 +22,15 @@ router.post("/register", (req, res, next) => {
 
   user.password = hash;
 
-  Users.add(user)
-    .then((saved) => {
-      res.status(201).json({ message: `Welcome ${saved.username}!` });
-    })
-    .catch(next);
+  if (!user.username || !user.password) {
+    next({ message: "username and password required" });
+  } else {
+    Users.add(user)
+      .then((saved) => {
+        res.status(201).json({ message: `Welcome ${saved.username}!` });
+      })
+      .catch(next);
+  }
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -54,6 +60,10 @@ router.post("/register", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
   let { username, password } = req.body;
+
+  if (!username || !password) {
+    next({ message: "username and password required" });
+  }
 
   Users.findBy({ username })
     .then(([user]) => {
