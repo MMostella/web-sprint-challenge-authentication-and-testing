@@ -26,7 +26,22 @@ function checkForUserInput(req, res, next) {
   }
 }
 
+async function checkUsernameExists(req, res, next) {
+  try {
+    const users = await User.findBy({ username: req.body.username });
+    if (users.length) {
+      req.user = users[0];
+      next();
+    } else {
+      next({ status: 401, message: "Invalid credentials" });
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   checkUsernameFree,
   checkForUserInput,
+  checkUsernameExists,
 };

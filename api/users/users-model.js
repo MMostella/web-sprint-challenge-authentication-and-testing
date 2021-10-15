@@ -12,7 +12,9 @@ function getAll() {
 }
 
 async function add(user) {
-  const [id] = await db("users").insert(user);
+  const [id] = await db("users")
+    .insert(user)
+    .select("id", "username", "password");
   return findById(id);
 }
 
