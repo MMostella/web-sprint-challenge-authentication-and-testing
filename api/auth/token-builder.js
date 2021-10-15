@@ -6,9 +6,6 @@ module.exports = function (user) {
     subject: user.id,
     username: user.username,
   };
-  const options = {
-    expiredIn: "1d",
-  };
-  const token = jwt.sign(payload, JWT_SECRET, options);
+  const token = jwt.sign(payload, JWT_SECRET);
   return token;
 };
