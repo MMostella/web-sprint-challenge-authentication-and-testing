@@ -43,16 +43,20 @@ Your finished project must include all of the following requirements (further in
 
 ## Submission format
 
-- [ ] Submit via Codegrade by pushing commits to your `main` branch on Github.
-- [ ] Check Codegrade before the deadline to compare its results against your local tests.
-- [ ] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
-- [ ] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
+- [1] Submit via Codegrade by pushing commits to your `main` branch on Github.
+- [1] Check Codegrade before the deadline to compare its results against your local tests.
+- [1] Check Codegrade on the days following the Sprint Challenge for reviewer feedback.
+- [1] New commits will be evaluated by Codegrade if pushed _before_ the sprint challenge deadline.
 
 ## Interview Questions
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+   JSON is Stateless, while sessions are saved on the servers memory. Sessions work on a single domain and tokens work on on multiple domains.
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+   Allows us to hash to our hearts content. Also it provides some SALT to make breaches near impossible
 3. How are unit tests different from integration and end-to-end testing?
+   end-to-end tests the users experience from start to finish. Unit testing tests individual modules
 4. How does _Test Driven Development_ change the way we write applications and tests?
+   it gives a software development approach in which test cases are developed to specify and validate what the code will do
